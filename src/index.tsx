@@ -1,17 +1,11 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import ShadowRootElement from './lib/ShadowRootElement';
-import './styles.scss';
+import ShadowDom from './example/ShadowDom/ShadowDom';
 
 const App = () => {
-
   return (
     <>
-      <h1>Normal element</h1>
-      <ShadowRootElement shadowRootInit={{ mode: 'open' }}>
-        <h1>Element inside shadow dom </h1>
-        <h1>Element inside shadow dom </h1>
-      </ShadowRootElement>
+      <ShadowDom />
     </>
   );
 };
