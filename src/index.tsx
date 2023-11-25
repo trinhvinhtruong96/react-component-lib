@@ -8,7 +8,8 @@ const App = () => {
   return (
     <>
       <h1>Normal element</h1>
-      <ShadowRootElement shadowRootInit={{ mode: 'open' }} shadowHostName={'div'}>
+      <ShadowRootElement shadowRootInit={{ mode: 'open' }}>
+        <h1>Element inside shadow dom </h1>
         <h1>Element inside shadow dom </h1>
       </ShadowRootElement>
     </>

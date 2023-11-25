@@ -1,10 +1,10 @@
 import React, { createElement, HTMLAttributes, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
-type ShadowRootProps<T extends keyof HTMLElementTagNameMap = 'div'> = {
+type ShadowRootProps<T extends keyof HTMLElementTagNameMap> = {
   children: React.ReactNode;
   shadowRootInit: ShadowRootInit;
-  shadowHostName: T;
+  shadowHostName?: T;
 } & HTMLAttributes<T>;
 
 const ShadowRootElement = <T extends keyof HTMLElementTagNameMap>(
@@ -15,16 +15,19 @@ const ShadowRootElement = <T extends keyof HTMLElementTagNameMap>(
     ...rest
   }: ShadowRootProps<T>) => {
   const containerRef = useRef(null);
+  const shadowRoot =  useRef<ShadowRoot>()
 
   useEffect(() => {
-    const shadowRoot = containerRef.current.attachShadow(shadowRootInit);
-    const root = createRoot(shadowRoot);
-    root.render(children);
+    if(!shadowRoot.current) {
+      shadowRoot.current = containerRef.current.attachShadow(shadowRootInit);
+      const root = createRoot(shadowRoot.current);
+      root.render(children);
+    }
   }, []);
 
 
   return createElement(
-    shadowHostName,
+    shadowHostName ?? "div",
     { ref: containerRef, ...rest },
   );
 };
